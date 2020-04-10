@@ -28,7 +28,7 @@ public final class App {
     }
 
     private static List<Integer> getMassesFromFile() {
-        File f = new File("src/main/resources/inputs.txt");
+        File f = new File("src/main/resources/masses.txt");
         if (f.canRead()) {
             List<String> lines;
 			try {
