@@ -17,4 +17,14 @@ public class IntCodeProgramTest {
         assertArrayEquals(codes2Output, IntCodeProgram.computeProgramCodes(codes2Input));
 
     }
+
+    @Test
+    public void testGetInputPairForOutput() throws Exception {
+        int[] codesInput = InputLoader.getIntCodes();
+        int[] expectedPair = new int[] { 12, 2 };
+        int desiredOutput = 3790645;
+        IntCodeProgram program = new IntCodeProgram(codesInput);
+        int[] pair = program.getInputPairForOutput(desiredOutput);
+        assertArrayEquals(expectedPair, pair);
+    }
 }
