@@ -9,10 +9,10 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
 
 public class InputLoader {
-
-    public static int[] getIntCodesFromFile() throws IOException {
+    private static final String resourcesFolderPath = "src/main/resources/";
+    public static int[] getIntCodes() throws IOException {
         String text = "";
-        File f = new File("src/main/resources/intcodes.txt");
+        File f = new File(resourcesFolderPath.concat("intcodes.txt"));
         if (f.canRead()) {
 			try {
                 text = FileUtils.readFileToString(f, "UTF-8");
@@ -25,9 +25,9 @@ public class InputLoader {
             .toArray();
     }
 
-    public static List<Integer> getMassesFromFile() throws IOException {
+    public static List<Integer> getMasses() throws IOException {
         List<String> lines = null;
-        File f = new File("src/main/resources/masses.txt");
+        File f = new File(resourcesFolderPath.concat("masses.txt"));
         if (f.canRead()) {
 			try {
                 lines = FileUtils.readLines(f, "UTF-8");

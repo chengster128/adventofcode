@@ -11,13 +11,13 @@ import org.junit.Test;
 public class InputLoaderTest {
     @Test
     public void testGetMassesFromFile() throws IOException {
-        List<Integer> masses = InputLoader.getMassesFromFile();
+        List<Integer> masses = InputLoader.getMasses();
         assertFalse(masses.isEmpty());
     }
 
     @Test
     public void testGetIntCodesFromFile() throws IOException {
-        int[] codes = InputLoader.getIntCodesFromFile();
+        int[] codes = InputLoader.getIntCodes();
         assertTrue(codes.length > 0);
     }
 }
