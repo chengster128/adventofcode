@@ -10,6 +10,7 @@ public final class App {
     public static void main(String[] args) {
         answerDay1();
         answerDay2();
+        answerDay2Part2();
     }
 
     private static void answerDay1() {
@@ -38,6 +39,26 @@ public final class App {
             codes[2] = 2;
             codes = IntCodeProgram.computeProgramCodes(codes);
             System.out.println("Day 2 Answer: " + codes[0]);
+        } catch (Exception e) {
+            System.out.println("ERROR: Day 2 - Could not load from file");
+        }
+    }
+
+    private static void answerDay2Part2() {
+        try {
+            final int[] codes = InputLoader.getIntCodes();
+
+            IntCodeProgram program = new IntCodeProgram(codes);
+            try {
+                int[] answer = program.getInputPairForOutput(19690720);
+                if (answer.length > 0) {
+                    System.out.println(String.format("Day 2 Part 2 Answer: noun=%d, verb=%d", answer[0], answer[1]));
+                } else {
+                    System.out.println("Day 2 Part 2 Answer: Not Found!");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         } catch (Exception e) {
             System.out.println("ERROR: Day 2 - Could not load from file");
         }
