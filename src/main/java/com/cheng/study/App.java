@@ -1,7 +1,11 @@
 package com.cheng.study;
 
+import java.awt.Point;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 public final class App {
     private App() {
@@ -11,6 +15,7 @@ public final class App {
         answerDay1();
         answerDay2();
         answerDay2Part2();
+        answerDay3();
     }
 
     private static void answerDay1() {
@@ -61,6 +66,29 @@ public final class App {
             }
         } catch (Exception e) {
             System.out.println("ERROR: Day 2 - Could not load from file");
+        }
+    }
+
+    private static void answerDay3() {
+        try {
+            final List<List<String>> wires = InputLoader.getWires();
+            Instant start = Instant.now();
+            CrossWireEvaluator program = new CrossWireEvaluator();
+            try {
+                Optional<Point> point = program.getClosestIntersectionOfPaths(wires);
+                if (point.isPresent()) {
+                    Instant finish = Instant.now();
+                    long timeElapsed = Duration.between(start, finish).toMillis(); 
+                    System.out.println("Day 3 Part 1. Dur:" + timeElapsed + "ms Answer: " + CrossWireEvaluator.getManhattanDistanceFromOrigin(point.get()));
+                } else {
+                    System.out.println("Day 3 Part 1 Answer: Not Found!");
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } catch (Exception e) {
+            System.out.println("ERROR: Day 3 - Could not load from file");
+        
         }
     }
 
