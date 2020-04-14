@@ -6,11 +6,38 @@ import java.util.Objects;
 public class PathSegment {
     private final Point start;
     private final Point end;
+    private final int distanceFromOriginAtStart;
+    private final boolean isHorizontal;
     private final static String ERROR_INVALID_VECTOR = "Invalid vector value";
 
     public PathSegment(Point start, Point end) {
         this.start = start;
         this.end = end;
+        this.distanceFromOriginAtStart = 0;
+        this.isHorizontal = start.getY() == end.getY();
+    }
+
+    public PathSegment(Point start, Point end, int distanceFromOriginAtStart) {
+        this.start = start;
+        this.end = end;
+        this.distanceFromOriginAtStart = distanceFromOriginAtStart;
+        this.isHorizontal = start.getY() == end.getY();
+    }
+
+    public Point getStart() {
+        return this.start;
+    }
+
+    public Point getEnd() {
+        return this.end;
+    }
+
+    public int getDistanceFromOriginAtStart() {
+        return distanceFromOriginAtStart;
+    }
+
+    public boolean getIsHorizontal() {
+        return isHorizontal;
     }
 
     public static PathSegment fromVector(Point start, String vector) throws Exception {
@@ -19,6 +46,17 @@ public class PathSegment {
         int endY = calculateY(start, direction, distance);
         int endX = calculateX(start, direction, distance);
         return new PathSegment(start, new Point(endX, endY));
+    }
+
+    public static PathSegment fromVector(Point start, String vector, int previousDistanceFromOrigin) throws Exception {
+        char direction = getDirectionFromVector(vector);
+        Integer distance = Integer.parseInt(vector.substring(1));
+        int endY = calculateY(start, direction, distance);
+        int endX = calculateX(start, direction, distance);
+        Point endPoint = new Point(endX, endY);
+        return new PathSegment(start, 
+            endPoint, 
+            previousDistanceFromOrigin);
     }
 
     private static char getDirectionFromVector(String vector) throws Exception {
@@ -55,13 +93,17 @@ public class PathSegment {
         return (int) (start.getX() - distance);
     }
 
-    public Point getStart() {
-        return this.start;
+    public final int calculateDistance() {
+        return (int)(Math.abs(start.getX() - end.getX()) + Math.abs(start.getY() - end.getY()));
     }
 
-    public Point getEnd() {
-        return this.end;
+    public int getDistanceFromOriginAtEnd() {
+        return distanceFromOriginAtStart + calculateDistance();
     }
+
+    // boolean isHorizontal() {
+    //     return start.getY() == end.getY();
+    // }
 
     @Override
     public boolean equals(Object other) {
