@@ -1,6 +1,5 @@
 package com.cheng.study;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
@@ -75,14 +74,26 @@ public final class App {
             Instant start = Instant.now();
             CrossWireEvaluator program = new CrossWireEvaluator();
             try {
-                Optional<Point> point = program.getClosestIntersectionOfPaths(wires);
-                if (point.isPresent()) {
+                // Optional<Point> point = program.getClosestIntersectionOfPaths(wires);
+                program.loadPaths(wires);
+                Optional<Integer> closestManhattanOptional = program.getClosestManhattanIntersection();
+                if (closestManhattanOptional.isPresent()) {
                     Instant finish = Instant.now();
                     long timeElapsed = Duration.between(start, finish).toMillis(); 
-                    System.out.println("Day 3 Part 1. Dur:" + timeElapsed + "ms Answer: " + CrossWireEvaluator.getManhattanDistanceFromOrigin(point.get()));
+                    System.out.println("Day 3 Part 1. Dur:" + timeElapsed + "ms Answer: " + closestManhattanOptional.get());
                 } else {
                     System.out.println("Day 3 Part 1 Answer: Not Found!");
                 }
+
+                Optional<Integer> shortestDistanceOptional = program.getShortestDistanceIntersection();
+                if (shortestDistanceOptional.isPresent()) {
+                    Instant finish = Instant.now();
+                    long timeElapsed = Duration.between(start, finish).toMillis(); 
+                    System.out.println("Day 3 Part 2. Dur:" + timeElapsed + "ms Answer: " + shortestDistanceOptional.get());
+                } else {
+                    System.out.println("Day 3 Part 2 Answer: Not Found!");
+                }
+
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -91,5 +102,4 @@ public final class App {
         
         }
     }
-
 }
